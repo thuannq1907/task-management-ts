@@ -25,6 +25,13 @@ export const index = async (req: Request, res: Response) => {
   const objectPagination = paginationHelper(2, req.query, countTasks);
   // End Pagination
 
+  // Search
+  if(req.query.keyword) {
+    const regex = new RegExp(`${req.query.keyword}`, "i");
+    find["title"] = regex;
+  }
+  // End Search
+
   const tasks = await Task.find(find)
     .sort(sort)
     .limit(objectPagination.limitItems)
