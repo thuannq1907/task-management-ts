@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
 import { connect as connectDatabase } from "./config/database";
 
 import mainV1Routes from "./api/v1/routes/index.route";
@@ -9,6 +10,9 @@ connectDatabase();
 
 const app: Express = express();
 const port: string | number = process.env.PORT || 3000;
+
+// parse application/json
+app.use(bodyParser.json());
 
 // API Routes
 mainV1Routes(app);
